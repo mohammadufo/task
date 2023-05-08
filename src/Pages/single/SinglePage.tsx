@@ -7,12 +7,15 @@ import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import { Button, CardActionArea, CardActions, Alert } from '@mui/material'
 import { Link } from 'react-router-dom'
+import { Skeleton } from '@mui/material'
 
 const SinglePage = () => {
   let { id } = useParams()
   let [data, setData] = useState([])
 
   let api = `https://rickandmortyapi.com/api/character/${id}`
+
+  const loading = false
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,7 +26,9 @@ const SinglePage = () => {
     fetchData()
   }, [api])
 
-  return (
+  return loading ? (
+    <Skeleton animation="wave" variant="circular" width={40} height={40} />
+  ) : (
     <div className="wrapper">
       <Card className="singleCart">
         <CardActionArea>
