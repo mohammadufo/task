@@ -37,7 +37,9 @@ const SinglePage = () => {
             <Typography gutterBottom variant="h5" component="div">
               {data.name}
             </Typography>
-            <Alert severity="success">{data.status}</Alert>
+            <Alert variant="filled" severity="success">
+              {data.status}
+            </Alert>
             <div className="desc">
               <span>
                 Gender : <strong>{data.gender}</strong>{' '}
@@ -55,9 +57,11 @@ const SinglePage = () => {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button size="small" color="primary">
-            <Link to="/">BACK</Link>
-          </Button>
+          <Link to="/">
+            <Button size="small" color="primary">
+              BACK
+            </Button>
+          </Link>
         </CardActions>
       </Card>
     </div>

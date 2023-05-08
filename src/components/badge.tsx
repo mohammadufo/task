@@ -1,5 +1,5 @@
-import { Chip } from "@mui/material";
-import React from "react";
+import { Chip } from '@mui/material'
+import React from 'react'
 
 const Badge = ({ status }) => {
   return (
@@ -7,10 +7,11 @@ const Badge = ({ status }) => {
       className="badge"
       label={status}
       color={
-        status === "Alive" ? "success" : status === "Dead" ? "error" : "default"
+        status === 'Alive' ? 'success' : status === 'Dead' ? 'error' : 'default'
       }
+      variant="filled"
     />
-  );
-};
+  )
+}
 
-export default Badge;
+export default Badge

@@ -1,28 +1,50 @@
-import Badge from "../badge";
-import { Results } from "../../types/Info";
-import "./cart.scss";
-import { Link } from "react-router-dom";
+import Badge from '../badge'
+import { Results } from '../../types/Info'
+import './cart.scss'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import CardMedia from '@mui/material/CardMedia'
+import Typography from '@mui/material/Typography'
+import { Button, CardActionArea, CardActions, Alert } from '@mui/material'
+import { Link } from 'react-router-dom'
 
 const Cart = (props: Results[]) => {
   return (
     <div className="container">
       {props.results.map((res) => (
-        <div key={res.id} className="card">
-          <Link to={`/single/${res.id}`}>
-            <img className="img" src={res.image} alt="" />
-            <div className="content">
-              <h2>{res.name}</h2>
+        <Card className="cart" key={res.id}>
+          <CardActionArea>
+            <Link to={`/single/${res.id}`}>
+              <CardMedia
+                component="img"
+                height="250"
+                image={res.image}
+                alt={res.name}
+              />
+            </Link>
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                {res.name}
+              </Typography>
+              <Badge status={res.status} />
               <div className="desc">
                 <span>Last Location</span>
                 <span>{res.location.name}</span>
-                <Badge status={res.status} />
               </div>
-            </div>
-          </Link>
-        </div>
+            </CardContent>
+          </CardActionArea>
+
+          <CardActions className="cartAction">
+            <Link to={`/single/${res.id}`}>
+              <Button size="small" color="primary">
+                Show more
+              </Button>
+            </Link>
+          </CardActions>
+        </Card>
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default Cart;
+export default Cart
