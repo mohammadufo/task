@@ -6,6 +6,7 @@ import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import { Button, CardActionArea, CardActions, Alert } from '@mui/material'
+import { Link } from 'react-router-dom'
 
 const SinglePage = () => {
   let { id } = useParams()
@@ -37,23 +38,25 @@ const SinglePage = () => {
               {data.name}
             </Typography>
             <Alert severity="success">{data.status}</Alert>
-            <span>
-              Gender : <strong>{data.gender}</strong>{' '}
-            </span>
-            <span>
-              Location : <strong>{data.location?.name}</strong>{' '}
-            </span>
-            <span>
-              Origin : <strong>{data.origin?.name}</strong>{' '}
-            </span>
-            <span>
-              Species : <strong>{data.species}</strong>{' '}
-            </span>
+            <div className="desc">
+              <span>
+                Gender : <strong>{data.gender}</strong>{' '}
+              </span>
+              <span>
+                Location : <strong>{data.location?.name}</strong>{' '}
+              </span>
+              <span>
+                Origin : <strong>{data.origin?.name}</strong>{' '}
+              </span>
+              <span>
+                Species : <strong>{data.species}</strong>{' '}
+              </span>
+            </div>
           </CardContent>
         </CardActionArea>
         <CardActions>
           <Button size="small" color="primary">
-            Share
+            <Link to="/">BACK</Link>
           </Button>
         </CardActions>
       </Card>

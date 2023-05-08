@@ -8,6 +8,14 @@
   .singleCart {
     width: 20rem;
 
+    .desc {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      gap: 0.7rem;
+      margin-top: 1rem;
+    }
+
     img {
       object-fit: contain;
     }
