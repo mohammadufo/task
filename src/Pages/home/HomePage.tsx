@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import Cart from "../../components/cart/Cart";
 import Search from "../../components/search/Search";
-import { Pagination } from "@mui/material";
+import { Button, IconButton, Pagination } from "@mui/material";
 import newRequest from "../../utils/newRequest";
 import { useQuery } from "@tanstack/react-query";
 import LoadingComponent from "../../components/loading/LoadingComponent";
 import Filter from "../../components/filter/Filter";
+import { useDispatch, useSelector } from "react-redux";
+import { lightMode, darkMode } from "../../redux/themeSlice";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
 
 const HomePage = () => {
   const [pageNumber, updatePageNumber] = useState(1);
@@ -13,6 +17,9 @@ const HomePage = () => {
   const [status, updateStatus] = useState("");
   const [gender, updateGender] = useState("");
   const [species, updateSpecies] = useState("");
+
+  const darkTheme = useSelector((state) => state.theme.darkMode);
+  const dispatch = useDispatch();
 
   const speciesArr: string[] = [
     "Human",
@@ -56,9 +63,23 @@ const HomePage = () => {
     refetch();
   }, [pageNumber, search, status, gender, species]);
 
+  const handleTheme = () => {
+    if (darkTheme) {
+      dispatch(lightMode());
+      return;
+    }
+    dispatch(darkMode());
+  };
+
   return (
     <div>
-      <h1 className="text-center mb-3">Characters</h1>
+      <div>
+        <h1 className="text-center mb-3">Characters</h1>
+        <span>{darkTheme ? "light mode" : "dark mode"} </span>
+        <IconButton onClick={handleTheme} color="inherit">
+          {darkTheme ? <Brightness7Icon /> : <Brightness4Icon />}
+        </IconButton>
+      </div>
       <Search setSearch={updateSearch} updatePageNumber={updatePageNumber} />
       <Filter
         handleChangeStatus={handleChangeStatus}
