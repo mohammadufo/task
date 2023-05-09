@@ -1,33 +1,34 @@
-import axios from 'axios'
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
-import CardMedia from '@mui/material/CardMedia'
-import Typography from '@mui/material/Typography'
-import { Button, CardActionArea, CardActions, Alert } from '@mui/material'
-import { Link } from 'react-router-dom'
-import { Skeleton } from '@mui/material'
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import { Button, CardActionArea, CardActions, Alert } from "@mui/material";
+import { Link } from "react-router-dom";
+import LoadingComponent from "../../components/LoadingComponent";
 
 const SinglePage = () => {
-  let { id } = useParams()
-  let [data, setData] = useState([])
+  let { id } = useParams();
+  let [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  let api = `https://rickandmortyapi.com/api/character/${id}`
-
-  const loading = false
+  let api = `https://rickandmortyapi.com/api/character/${id}`;
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(api)
-      console.log(response.data)
-      setData(response.data)
-    }
-    fetchData()
-  }, [api])
+      setLoading(true);
+      const response = await axios.get(api);
+      console.log(response.data);
+      setData(response.data);
+      setLoading(false);
+    };
+    fetchData();
+  }, [api]);
 
   return loading ? (
-    <Skeleton animation="wave" variant="circular" width={40} height={40} />
+    <LoadingComponent />
   ) : (
     <div className="wrapper">
       <Card className="singleCart">
@@ -47,16 +48,16 @@ const SinglePage = () => {
             </Alert>
             <div className="desc">
               <span>
-                Gender : <strong>{data.gender}</strong>{' '}
+                Gender : <strong>{data.gender}</strong>
               </span>
               <span>
-                Location : <strong>{data.location?.name}</strong>{' '}
+                Location : <strong>{data.location?.name}</strong>
               </span>
               <span>
-                Origin : <strong>{data.origin?.name}</strong>{' '}
+                Origin : <strong>{data.origin?.name}</strong>
               </span>
               <span>
-                Species : <strong>{data.species}</strong>{' '}
+                Species : <strong>{data.species}</strong>
               </span>
             </div>
           </CardContent>
@@ -70,7 +71,7 @@ const SinglePage = () => {
         </CardActions>
       </Card>
     </div>
-  )
-}
+  );
+};
 
-export default SinglePage
+export default SinglePage;
