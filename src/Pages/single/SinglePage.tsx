@@ -5,7 +5,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions, Alert } from "@mui/material";
 import { Link } from "react-router-dom";
-import LoadingComponent from "../../components/LoadingComponent";
+import LoadingComponent from "../../components/loading/LoadingComponent";
 import { useQuery } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
 import { useEffect } from "react";

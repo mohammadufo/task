@@ -40,12 +40,38 @@
   left: 0;
   z-index: 100000;
   background-color: rgba(0, 0, 0, 0.2);
-  /* background-color: ${({ theme }) => theme.bgLight4}; */
-  /* background-color: #17202a; */
 
   display: flex;
   align-items: center;
   justify-content: center;
   position: fixed;
   cursor: wait;
+}
+
+$radius: 10px;
+.container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  .cart {
+    width: 20rem;
+    height: 26rem;
+    position: relative;
+
+    .cartAction {
+      position: absolute;
+      bottom: 10px;
+    }
+  }
+}
+
+.badge {
+  top: 13px;
+  right: 13px;
+  font-size: 17px;
+  position: absolute;
 }

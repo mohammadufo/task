@@ -1,20 +1,15 @@
 import { useEffect, useState } from "react";
 import Cart from "../../components/cart/Cart";
 import Search from "../../components/search/Search";
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Pagination,
-  Select,
-} from "@mui/material";
+import { Pagination } from "@mui/material";
 import newRequest from "../../utils/newRequest";
 import { useQuery } from "@tanstack/react-query";
-import LoadingComponent from "../../components/LoadingComponent";
+import LoadingComponent from "../../components/loading/LoadingComponent";
+import Filter from "../../components/filter/Filter";
 
 const HomePage = () => {
   const [pageNumber, updatePageNumber] = useState(1);
-  const [search, setSearch] = useState("");
+  const [search, updateSearch] = useState("");
   const [status, updateStatus] = useState("");
   const [gender, updateGender] = useState("");
   const [species, updateSpecies] = useState("");
@@ -33,17 +28,17 @@ const HomePage = () => {
     "Planet",
   ];
 
-  const handleChange = (event, value) => {
+  const handleChangePagination = (event, value) => {
     updatePageNumber(value);
   };
 
-  const handleChangeStatus = (event, value) => {
+  const handleChangeStatus = (event) => {
     updateStatus(event.target.value);
   };
-  const handleChangeGender = (event, value) => {
+  const handleChangeGender = (event) => {
     updateGender(event.target.value);
   };
-  const handleChangeSpecies = (event, value) => {
+  const handleChangeSpecies = (event) => {
     updateSpecies(event.target.value);
   };
 
@@ -52,65 +47,31 @@ const HomePage = () => {
     queryFn: () =>
       newRequest
         .get(
-          `?page=${pageNumber}&name=${search}&status=${status}&gender=${gender}&species=${species}`
+          `/?page=${pageNumber}&name=${search}&status=${status}&gender=${gender}&species=${species}`
         )
         .then((res) => res.data),
   });
 
+  console.log(data);
+
   useEffect(() => {
     refetch();
+    console.log(pageNumber);
   }, [pageNumber, search, status, gender, species]);
 
   return (
     <div>
       <h1 className="text-center mb-3">Characters</h1>
-      <Search setSearch={setSearch} updatePageNumber={updatePageNumber} />
-      <div className="filterContainer">
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Status</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={status}
-            label="Age"
-            onChange={handleChangeStatus}
-          >
-            <MenuItem value={"Alive"}>Alive</MenuItem>
-            <MenuItem value={"Dead"}>Dead</MenuItem>
-            <MenuItem value={"Unknown"}>Unknown</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Gender</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={gender}
-            label="Age"
-            onChange={handleChangeGender}
-          >
-            <MenuItem value={"Male"}>Male</MenuItem>
-            <MenuItem value={"Female"}>Female</MenuItem>
-            <MenuItem value={"Unknown"}>Unknown</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Species</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={species}
-            label="Age"
-            onChange={handleChangeSpecies}
-          >
-            {speciesArr.map((species) => (
-              <MenuItem key={species} value={species}>
-                {species}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </div>
+      <Search setSearch={updateSearch} updatePageNumber={updatePageNumber} />
+      <Filter
+        handleChangeStatus={handleChangeStatus}
+        status={status}
+        gender={gender}
+        handleChangeGender={handleChangeGender}
+        species={species}
+        handleChangeSpecies={handleChangeSpecies}
+        speciesArr={speciesArr}
+      />
 
       {isLoading ? (
         <LoadingComponent />
@@ -121,11 +82,15 @@ const HomePage = () => {
               <Cart results={data?.results} />
             </div>
           </div>
+          <br />
           <Pagination
-            count={5}
-            color="secondary"
+            count={data?.info.pages}
+            size="large"
             page={pageNumber}
-            onChange={handleChange}
+            variant="outlined"
+            shape="rounded"
+            onChange={handleChangePagination}
+            color="primary"
           />
         </div>
       )}
