@@ -1,17 +1,17 @@
-import "./App.css";
-import { Outlet } from "react-router-dom";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-import { useSelector } from "react-redux";
+import './App.css'
+import { Outlet } from 'react-router-dom'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+import CssBaseline from '@mui/material/CssBaseline'
+import { useSelector } from 'react-redux'
 
 function App() {
-  const darkMode = useSelector((state) => state.theme.darkMode);
+  const darkMode = useSelector((state: any) => state.theme.darkMode)
 
   const darkTheme = createTheme({
     palette: {
-      mode: darkMode ? "dark" : "light",
+      mode: darkMode ? 'dark' : 'light',
     },
-  });
+  })
 
   return (
     <div className="App">
@@ -20,7 +20,7 @@ function App() {
         <Outlet />
       </ThemeProvider>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

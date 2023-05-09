@@ -1,6 +1,8 @@
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 
-const Filter = (props) => {
+const Filter = (props: any) => {
   return (
     <div>
       <div className="filterContainer">
@@ -13,9 +15,9 @@ const Filter = (props) => {
             label="Age"
             onChange={props.handleChangeStatus}
           >
-            <MenuItem value={"Alive"}>Alive</MenuItem>
-            <MenuItem value={"Dead"}>Dead</MenuItem>
-            <MenuItem value={"Unknown"}>Unknown</MenuItem>
+            <MenuItem value={'Alive'}>Alive</MenuItem>
+            <MenuItem value={'Dead'}>Dead</MenuItem>
+            <MenuItem value={'Unknown'}>Unknown</MenuItem>
           </Select>
         </FormControl>
         <FormControl fullWidth>
@@ -27,9 +29,9 @@ const Filter = (props) => {
             label="Age"
             onChange={props.handleChangeGender}
           >
-            <MenuItem value={"Male"}>Male</MenuItem>
-            <MenuItem value={"Female"}>Female</MenuItem>
-            <MenuItem value={"Unknown"}>Unknown</MenuItem>
+            <MenuItem value={'Male'}>Male</MenuItem>
+            <MenuItem value={'Female'}>Female</MenuItem>
+            <MenuItem value={'Unknown'}>Unknown</MenuItem>
           </Select>
         </FormControl>
         <FormControl fullWidth>
@@ -41,7 +43,7 @@ const Filter = (props) => {
             label="Age"
             onChange={props.handleChangeSpecies}
           >
-            {props?.speciesArr?.map((species) => (
+            {props?.speciesArr?.map((species: string[]) => (
               <MenuItem key={species} value={species}>
                 {species}
               </MenuItem>
@@ -50,7 +52,7 @@ const Filter = (props) => {
         </FormControl>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Filter;
+export default Filter

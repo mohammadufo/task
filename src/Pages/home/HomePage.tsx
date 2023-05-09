@@ -1,81 +1,81 @@
-import { useEffect, useState } from "react";
-import Cart from "../../components/cart/Cart";
-import Search from "../../components/search/Search";
-import { Button, IconButton, Pagination } from "@mui/material";
-import newRequest from "../../utils/newRequest";
-import { useQuery } from "@tanstack/react-query";
-import LoadingComponent from "../../components/loading/LoadingComponent";
-import Filter from "../../components/filter/Filter";
-import { useDispatch, useSelector } from "react-redux";
-import { lightMode, darkMode } from "../../redux/themeSlice";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
+import { useEffect, useState } from 'react'
+import Cart from '../../components/cart/Cart'
+import Search from '../../components/search/Search'
+import { IconButton, Pagination } from '@mui/material'
+import newRequest from '../../utils/newRequest'
+import { useQuery } from '@tanstack/react-query'
+import LoadingComponent from '../../components/loading/LoadingComponent'
+import Filter from '../../components/filter/Filter'
+import { useDispatch, useSelector } from 'react-redux'
+import { lightMode, darkMode } from '../../redux/themeSlice'
+import Brightness4Icon from '@mui/icons-material/Brightness4'
+import Brightness7Icon from '@mui/icons-material/Brightness7'
 
 const HomePage = () => {
-  const [pageNumber, updatePageNumber] = useState(1);
-  const [search, updateSearch] = useState("");
-  const [status, updateStatus] = useState("");
-  const [gender, updateGender] = useState("");
-  const [species, updateSpecies] = useState("");
+  const [pageNumber, updatePageNumber] = useState(1)
+  const [search, updateSearch] = useState('')
+  const [status, updateStatus] = useState('')
+  const [gender, updateGender] = useState('')
+  const [species, updateSpecies] = useState('')
 
-  const darkTheme = useSelector((state) => state.theme.darkMode);
-  const dispatch = useDispatch();
+  const darkTheme = useSelector((state: any) => state.theme.darkMode)
+  const dispatch = useDispatch()
 
   const speciesArr: string[] = [
-    "Human",
-    "Alien",
-    "Humanoid",
-    "Poopybutthole",
-    "Mythological",
-    "Unknown",
-    "Animal",
-    "Disease",
-    "Robot",
-    "Cronenberg",
-    "Planet",
-  ];
+    'Human',
+    'Alien',
+    'Humanoid',
+    'Poopybutthole',
+    'Mythological',
+    'Unknown',
+    'Animal',
+    'Disease',
+    'Robot',
+    'Cronenberg',
+    'Planet',
+  ]
 
-  const handleChangePagination = (event, value) => {
-    updatePageNumber(value);
-  };
+  const handleChangePagination = (value: any) => {
+    updatePageNumber(value)
+  }
 
-  const handleChangeStatus = (event) => {
-    updateStatus(event.target.value);
-  };
-  const handleChangeGender = (event) => {
-    updateGender(event.target.value);
-  };
-  const handleChangeSpecies = (event) => {
-    updateSpecies(event.target.value);
-  };
+  const handleChangeStatus = (event: React.ChangeEvent<HTMLInputElement>) => {
+    updateStatus(event.target.value)
+  }
+  const handleChangeGender = (event: React.ChangeEvent<HTMLInputElement>) => {
+    updateGender(event.target.value)
+  }
+  const handleChangeSpecies = (event: React.ChangeEvent<HTMLInputElement>) => {
+    updateSpecies(event.target.value)
+  }
 
   const { isLoading, data, refetch } = useQuery({
-    queryKey: ["homepage"],
+    queryKey: ['homepage'],
     queryFn: () =>
       newRequest
         .get(
           `/?page=${pageNumber}&name=${search}&status=${status}&gender=${gender}&species=${species}`
         )
-        .then((res) => res.data),
-  });
+        .then((res: any) => res.data),
+  })
 
   useEffect(() => {
-    refetch();
-  }, [pageNumber, search, status, gender, species]);
+    refetch()
+  }, [pageNumber, search, status, gender, species])
 
   const handleTheme = () => {
     if (darkTheme) {
-      dispatch(lightMode());
-      return;
+      dispatch(lightMode())
+      return
     }
-    dispatch(darkMode());
-  };
+    dispatch(darkMode())
+  }
 
   return (
     <div>
       <div>
         <h1 className="text-center mb-3">Characters</h1>
-        <span>{darkTheme ? "light mode" : "dark mode"} </span>
+        <span>{darkTheme ? 'light mode' : 'dark mode'} </span>
         <IconButton onClick={handleTheme} color="inherit">
           {darkTheme ? <Brightness7Icon /> : <Brightness4Icon />}
         </IconButton>
@@ -113,7 +113,7 @@ const HomePage = () => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default HomePage;
+export default HomePage

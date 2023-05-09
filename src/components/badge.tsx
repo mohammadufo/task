@@ -1,13 +1,16 @@
 import { Chip } from '@mui/material'
-import React from 'react'
 
-const Badge = ({ status }) => {
+const Badge = (props: { status: string }) => {
   return (
     <Chip
       className="badge"
-      label={status}
+      label={props.status}
       color={
-        status === 'Alive' ? 'success' : status === 'Dead' ? 'error' : 'default'
+        props.status === 'Alive'
+          ? 'success'
+          : props.status === 'Dead'
+          ? 'error'
+          : 'default'
       }
       variant="filled"
     />
