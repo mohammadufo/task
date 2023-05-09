@@ -46,6 +46,10 @@
   justify-content: center;
   position: fixed;
   cursor: wait;
+
+  img {
+    width: 10rem;
+  }
 }
 
 $radius: 10px;

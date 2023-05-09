@@ -52,11 +52,8 @@ const HomePage = () => {
         .then((res) => res.data),
   });
 
-  console.log(data);
-
   useEffect(() => {
     refetch();
-    console.log(pageNumber);
   }, [pageNumber, search, status, gender, species]);
 
   return (
