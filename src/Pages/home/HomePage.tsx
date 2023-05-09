@@ -1,69 +1,65 @@
-import { useEffect, useState } from 'react'
-import axios from 'axios'
-import { Info, Results } from '../../types/Info'
-import Cart from '../../components/cart/Cart'
-import Search from '../../components/search/Search'
+import { useEffect, useState } from "react";
+import Cart from "../../components/cart/Cart";
+import Search from "../../components/search/Search";
 import {
   FormControl,
   InputLabel,
   MenuItem,
   Pagination,
   Select,
-} from '@mui/material'
+} from "@mui/material";
+import newRequest from "../../utils/newRequest";
+import { useQuery } from "@tanstack/react-query";
+import LoadingComponent from "../../components/LoadingComponent";
 
 const HomePage = () => {
-  const [info, setInfo] = useState<Info | Promise<Info>>()
-  const [results, setResults] = useState<Results[] | Promise<Results[]>>([])
+  const [pageNumber, updatePageNumber] = useState(1);
+  const [search, setSearch] = useState("");
+  const [status, updateStatus] = useState("");
+  const [gender, updateGender] = useState("");
+  const [species, updateSpecies] = useState("");
 
-  const [pageNumber, updatePageNumber] = useState(1)
-  const [search, setSearch] = useState('')
-  const [status, updateStatus] = useState('')
-  const [gender, updateGender] = useState('')
-  const [species, updateSpecies] = useState('')
-
-  let speciesArr = [
-    'Human',
-    'Alien',
-    'Humanoid',
-    'Poopybutthole',
-    'Mythological',
-    'Unknown',
-    'Animal',
-    'Disease',
-    'Robot',
-    'Cronenberg',
-    'Planet',
-  ]
+  const speciesArr: string[] = [
+    "Human",
+    "Alien",
+    "Humanoid",
+    "Poopybutthole",
+    "Mythological",
+    "Unknown",
+    "Animal",
+    "Disease",
+    "Robot",
+    "Cronenberg",
+    "Planet",
+  ];
 
   const handleChange = (event, value) => {
-    updatePageNumber(value)
-  }
+    updatePageNumber(value);
+  };
 
   const handleChangeStatus = (event, value) => {
-    updateStatus(event.target.value)
-  }
+    updateStatus(event.target.value);
+  };
   const handleChangeGender = (event, value) => {
-    updateGender(event.target.value)
-  }
+    updateGender(event.target.value);
+  };
   const handleChangeSpecies = (event, value) => {
-    updateSpecies(event.target.value)
-  }
+    updateSpecies(event.target.value);
+  };
 
-  let api = `https://rickandmortyapi.com/api/character/?page=${pageNumber}&name=${search}&status=${status}&gender=${gender}&species=${species}`
+  const { isLoading, data, refetch } = useQuery({
+    queryKey: ["homepage"],
+    queryFn: () =>
+      newRequest
+        .get(
+          `?page=${pageNumber}&name=${search}&status=${status}&gender=${gender}&species=${species}`
+        )
+        .then((res) => res.data),
+  });
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data } = await axios.get(api)
-        setInfo(data.info)
-        setResults(data.results)
-        console.log(data.results)
-      } catch (err) {
-        console.log(err)
-      }
-    }
-    fetchData()
-  }, [api])
+    refetch();
+  }, [pageNumber, search, status, gender, species]);
 
   return (
     <div>
@@ -79,9 +75,9 @@ const HomePage = () => {
             label="Age"
             onChange={handleChangeStatus}
           >
-            <MenuItem value={'Alive'}>Alive</MenuItem>
-            <MenuItem value={'Dead'}>Dead</MenuItem>
-            <MenuItem value={'Unknown'}>Unknown</MenuItem>
+            <MenuItem value={"Alive"}>Alive</MenuItem>
+            <MenuItem value={"Dead"}>Dead</MenuItem>
+            <MenuItem value={"Unknown"}>Unknown</MenuItem>
           </Select>
         </FormControl>
         <FormControl fullWidth>
@@ -93,9 +89,9 @@ const HomePage = () => {
             label="Age"
             onChange={handleChangeGender}
           >
-            <MenuItem value={'Male'}>Male</MenuItem>
-            <MenuItem value={'Female'}>Female</MenuItem>
-            <MenuItem value={'Unknown'}>Unknown</MenuItem>
+            <MenuItem value={"Male"}>Male</MenuItem>
+            <MenuItem value={"Female"}>Female</MenuItem>
+            <MenuItem value={"Unknown"}>Unknown</MenuItem>
           </Select>
         </FormControl>
         <FormControl fullWidth>
@@ -116,21 +112,25 @@ const HomePage = () => {
         </FormControl>
       </div>
 
-      <div className="container">
-        <div className="">
-          <div className="col-lg-8 col-12">
-            <Cart results={results} />
+      {isLoading ? (
+        <LoadingComponent />
+      ) : (
+        <div className="container">
+          <div className="">
+            <div className="col-lg-8 col-12">
+              <Cart results={data?.results} />
+            </div>
           </div>
+          <Pagination
+            count={5}
+            color="secondary"
+            page={pageNumber}
+            onChange={handleChange}
+          />
         </div>
-        <Pagination
-          count={5}
-          color="secondary"
-          page={pageNumber}
-          onChange={handleChange}
-        />
-      </div>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;

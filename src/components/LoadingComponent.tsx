@@ -4,7 +4,6 @@ const LoadingComponent = () => {
   return (
     <div className="loadingContainer">
       <img src={loader} />
-      <span>salam</span>
     </div>
   );
 };

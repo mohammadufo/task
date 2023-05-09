@@ -1,5 +1,3 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -8,26 +6,23 @@ import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions, Alert } from "@mui/material";
 import { Link } from "react-router-dom";
 import LoadingComponent from "../../components/LoadingComponent";
+import { useQuery } from "@tanstack/react-query";
+import newRequest from "../../utils/newRequest";
+import { useEffect } from "react";
 
 const SinglePage = () => {
   let { id } = useParams();
-  let [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
 
-  let api = `https://rickandmortyapi.com/api/character/${id}`;
+  const { isLoading, data, refetch } = useQuery({
+    queryKey: ["singleCart"],
+    queryFn: () => newRequest.get(`${id}`).then((res) => res.data),
+  });
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      const response = await axios.get(api);
-      console.log(response.data);
-      setData(response.data);
-      setLoading(false);
-    };
-    fetchData();
-  }, [api]);
+    refetch();
+  }, [id]);
 
-  return loading ? (
+  return isLoading ? (
     <LoadingComponent />
   ) : (
     <div className="wrapper">
