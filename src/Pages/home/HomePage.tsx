@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import Cart from '../../components/cart/Cart'
 import Search from '../../components/search/Search'
-import { IconButton, Pagination } from '@mui/material'
+import { IconButton, Pagination, Button } from '@mui/material'
 import newRequest from '../../utils/newRequest'
 import { useQuery } from '@tanstack/react-query'
 import LoadingComponent from '../../components/loading/LoadingComponent'
@@ -52,6 +52,13 @@ const HomePage = () => {
     updateSpecies(event.target.value)
   }
 
+  const clearFilter: () => void = () => {
+    updateSearch('')
+    updateSpecies('')
+    updateGender('')
+    updateStatus('')
+  }
+
   const { isLoading, data, refetch } = useQuery({
     queryKey: ['homepage'],
     queryFn: () =>
@@ -83,7 +90,11 @@ const HomePage = () => {
           {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
         </IconButton>
       </div>
-      <Search setSearch={updateSearch} updatePageNumber={updatePageNumber} />
+      <Search
+        search={search}
+        setSearch={updateSearch}
+        updatePageNumber={updatePageNumber}
+      />
       <Filter
         handleChangeStatus={handleChangeStatus}
         status={status}
@@ -93,6 +104,18 @@ const HomePage = () => {
         handleChangeSpecies={handleChangeSpecies}
         speciesArr={speciesArr}
       />
+
+      <div className="filterBtn">
+        <Button
+          className={status || search || gender || species || 'visible'}
+          variant="outlined"
+          size="small"
+          fullWidth
+          onClick={clearFilter}
+        >
+          Clear Filter
+        </Button>
+      </div>
 
       {isLoading ? (
         <LoadingComponent />

@@ -5,6 +5,7 @@ const Search = (props: any) => {
     <form className="search">
       <TextField
         fullWidth
+        value={props.search}
         label="Search for characters"
         onChange={(e) => {
           props.updatePageNumber(1)
