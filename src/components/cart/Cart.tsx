@@ -1,11 +1,11 @@
-import Badge from '../badge'
-import { Results } from '../../types/Info'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
-import CardMedia from '@mui/material/CardMedia'
-import Typography from '@mui/material/Typography'
-import { Button, CardActionArea, CardActions } from '@mui/material'
-import { Link } from 'react-router-dom'
+import Badge from "../badge";
+import { Results } from "../../types/types";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import { Button, CardActionArea, CardActions } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const Cart = (props: { results: Results[] }) => {
   return (
@@ -43,7 +43,7 @@ const Cart = (props: { results: Results[] }) => {
         </Card>
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default Cart
+export default Cart;
