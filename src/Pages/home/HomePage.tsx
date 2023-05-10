@@ -35,7 +35,7 @@ const HomePage = () => {
     "Planet",
   ];
 
-  const handleChangePagination = (value: any) => {
+  const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
     updatePageNumber(value);
   };
 
