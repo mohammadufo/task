@@ -37,6 +37,7 @@ const HomePage = () => {
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
     updatePageNumber(value);
+    console.log(event);
   };
 
   const handleChangeStatus = (event: React.ChangeEvent<HTMLInputElement>) => {
